@@ -229,24 +229,42 @@ export async function setupCommand(params: SetupCommandParams = {}) {
         await fs.ensureDir(scriptsDir);
 
         if (options.commandValidation) {
+          const commandValidatorSource = path.join(sourceDir!, "scripts/command-validator");
+          if (!fs.existsSync(commandValidatorSource)) {
+            throw new Error(
+              `Command validation source files not found at ${commandValidatorSource}. Please ensure the configuration files are available.`
+            );
+          }
           await fs.copy(
-            path.join(sourceDir!, "scripts/command-validator"),
+            commandValidatorSource,
             path.join(scriptsDir, "command-validator"),
             { overwrite: true },
           );
         }
 
         if (options.postEditTypeScript) {
+          const hookPostFileSource = path.join(sourceDir!, "scripts/hook-post-file.ts");
+          if (!fs.existsSync(hookPostFileSource)) {
+            throw new Error(
+              `Post-edit TypeScript hook file not found at ${hookPostFileSource}. Please ensure the configuration files are available.`
+            );
+          }
           await fs.copy(
-            path.join(sourceDir!, "scripts/hook-post-file.ts"),
+            hookPostFileSource,
             path.join(scriptsDir, "hook-post-file.ts"),
             { overwrite: true },
           );
         }
 
         if (options.customStatusline) {
+          const statuslineSource = path.join(sourceDir!, "scripts/statusline");
+          if (!fs.existsSync(statuslineSource)) {
+            throw new Error(
+              `Custom statusline source files not found at ${statuslineSource}. Please ensure the configuration files are available.`
+            );
+          }
           await fs.copy(
-            path.join(sourceDir!, "scripts/statusline"),
+            statuslineSource,
             path.join(scriptsDir, "statusline"),
             { overwrite: true },
           );
@@ -263,8 +281,14 @@ export async function setupCommand(params: SetupCommandParams = {}) {
           path.join(claudeDir, "commands"),
         );
       } else {
+        const commandsSource = path.join(sourceDir!, "commands");
+        if (!fs.existsSync(commandsSource)) {
+          throw new Error(
+            `AIBlueprint commands source files not found at ${commandsSource}. Please ensure the configuration files are available.`
+          );
+        }
         await fs.copy(
-          path.join(sourceDir!, "commands"),
+          commandsSource,
           path.join(claudeDir, "commands"),
           { overwrite: true },
         );
@@ -300,8 +324,14 @@ export async function setupCommand(params: SetupCommandParams = {}) {
           path.join(claudeDir, "agents"),
         );
       } else {
+        const agentsSource = path.join(sourceDir!, "agents");
+        if (!fs.existsSync(agentsSource)) {
+          throw new Error(
+            `AIBlueprint agents source files not found at ${agentsSource}. Please ensure the configuration files are available.`
+          );
+        }
         await fs.copy(
-          path.join(sourceDir!, "agents"),
+          agentsSource,
           path.join(claudeDir, "agents"),
           { overwrite: true },
         );
@@ -356,8 +386,14 @@ export async function setupCommand(params: SetupCommandParams = {}) {
           path.join(songDir, "need-human.mp3"),
         );
       } else {
+        const songSource = path.join(sourceDir!, "song");
+        if (!fs.existsSync(songSource)) {
+          throw new Error(
+            `Notification sounds source files not found at ${songSource}. Please ensure the configuration files are available.`
+          );
+        }
         await fs.copy(
-          path.join(sourceDir!, "song"),
+          songSource,
           path.join(claudeDir, "song"),
           { overwrite: true },
         );
