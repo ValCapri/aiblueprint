@@ -34,8 +34,9 @@ export interface SetupCommandParams {
  * @param description - A description of what the path contains (e.g., "Command validation source files")
  * @throws Error with a helpful message if the path doesn't exist
  */
-function validateSourcePath(sourcePath: string, description: string): void {
-  if (!fs.existsSync(sourcePath)) {
+async function validateSourcePath(sourcePath: string, description: string): Promise<void> {
+  const exists = await fs.pathExists(sourcePath);
+  if (!exists) {
     throw new Error(
       `${description} not found at ${sourcePath}. Please ensure the configuration files are available.`
     );
@@ -245,7 +246,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
 
         if (options.commandValidation) {
           const commandValidatorSource = path.join(sourceDir!, "scripts/command-validator");
-          validateSourcePath(commandValidatorSource, "Command validation source files");
+          await validateSourcePath(commandValidatorSource, "Command validation source files");
           await fs.copy(
             commandValidatorSource,
             path.join(scriptsDir, "command-validator"),
@@ -255,7 +256,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
 
         if (options.postEditTypeScript) {
           const hookPostFileSource = path.join(sourceDir!, "scripts/hook-post-file.ts");
-          validateSourcePath(hookPostFileSource, "Post-edit TypeScript hook file");
+          await validateSourcePath(hookPostFileSource, "Post-edit TypeScript hook file");
           await fs.copy(
             hookPostFileSource,
             path.join(scriptsDir, "hook-post-file.ts"),
@@ -265,7 +266,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
 
         if (options.customStatusline) {
           const statuslineSource = path.join(sourceDir!, "scripts/statusline");
-          validateSourcePath(statuslineSource, "Custom statusline source files");
+          await validateSourcePath(statuslineSource, "Custom statusline source files");
           await fs.copy(
             statuslineSource,
             path.join(scriptsDir, "statusline"),
@@ -285,7 +286,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
         );
       } else {
         const commandsSource = path.join(sourceDir!, "commands");
-        validateSourcePath(commandsSource, "AIBlueprint commands source files");
+        await validateSourcePath(commandsSource, "AIBlueprint commands source files");
         await fs.copy(
           commandsSource,
           path.join(claudeDir, "commands"),
@@ -324,7 +325,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
         );
       } else {
         const agentsSource = path.join(sourceDir!, "agents");
-        validateSourcePath(agentsSource, "AIBlueprint agents source files");
+        await validateSourcePath(agentsSource, "AIBlueprint agents source files");
         await fs.copy(
           agentsSource,
           path.join(claudeDir, "agents"),
@@ -382,7 +383,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
         );
       } else {
         const songSource = path.join(sourceDir!, "song");
-        validateSourcePath(songSource, "Notification sounds source files");
+        await validateSourcePath(songSource, "Notification sounds source files");
         await fs.copy(
           songSource,
           path.join(claudeDir, "song"),
