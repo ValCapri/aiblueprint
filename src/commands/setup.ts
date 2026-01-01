@@ -43,6 +43,18 @@ async function validateSourcePath(sourcePath: string, description: string): Prom
   }
 }
 
+/**
+ * Filter function to exclude unnecessary files/folders during copy
+ * @param src - Source file/folder path
+ * @returns true to copy, false to skip
+ */
+function shouldCopyFile(src: string): boolean {
+  const basename = path.basename(src);
+  // Skip node_modules, .git, and other development files
+  const excludedDirs = ['node_modules', '.git', '.DS_Store', 'dist', 'coverage'];
+  return !excludedDirs.includes(basename);
+}
+
 export async function setupCommand(params: SetupCommandParams = {}) {
   const {
     claudeCodeFolder: customClaudeCodeFolder,
@@ -249,7 +261,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
           await fs.copy(
             commandValidatorSource,
             path.join(scriptsDir, "command-validator"),
-            { overwrite: true },
+            { overwrite: true, filter: shouldCopyFile },
           );
         }
 
@@ -259,7 +271,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
           await fs.copy(
             hookPostFileSource,
             path.join(scriptsDir, "hook-post-file.ts"),
-            { overwrite: true },
+            { overwrite: true, filter: shouldCopyFile },
           );
         }
 
@@ -269,7 +281,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
           await fs.copy(
             statuslineSource,
             path.join(scriptsDir, "statusline"),
-            { overwrite: true },
+            { overwrite: true, filter: shouldCopyFile },
           );
         }
       }
@@ -289,7 +301,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
         await fs.copy(
           commandsSource,
           path.join(claudeDir, "commands"),
-          { overwrite: true },
+          { overwrite: true, filter: shouldCopyFile },
         );
       }
       s.stop("Commands installed");
@@ -328,7 +340,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
         await fs.copy(
           agentsSource,
           path.join(claudeDir, "agents"),
-          { overwrite: true },
+          { overwrite: true, filter: shouldCopyFile },
         );
       }
       s.stop("Agents installed");
@@ -386,7 +398,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
         await fs.copy(
           songSource,
           path.join(claudeDir, "song"),
-          { overwrite: true },
+          { overwrite: true, filter: shouldCopyFile },
         );
       }
       s.stop("Notification sounds installed");
