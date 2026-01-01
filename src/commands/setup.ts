@@ -43,7 +43,6 @@ async function validateSourcePath(sourcePath: string, description: string): Prom
   }
 }
 
-
 export async function setupCommand(params: SetupCommandParams = {}) {
   const {
     claudeCodeFolder: customClaudeCodeFolder,
