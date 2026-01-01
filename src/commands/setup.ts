@@ -28,6 +28,21 @@ export interface SetupCommandParams {
   skipInteractive?: boolean;
 }
 
+/**
+ * Validates that a source path exists and throws a helpful error if it doesn't
+ * @param sourcePath - The path to validate
+ * @param description - A description of what the path contains (e.g., "Command validation source files")
+ * @throws Error with a helpful message if the path doesn't exist
+ */
+function validateSourcePath(sourcePath: string, description: string): void {
+  if (!fs.existsSync(sourcePath)) {
+    throw new Error(
+      `${description} not found at ${sourcePath}. Please ensure the configuration files are available.`
+    );
+  }
+}
+
+
 export async function setupCommand(params: SetupCommandParams = {}) {
   const {
     claudeCodeFolder: customClaudeCodeFolder,
@@ -230,11 +245,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
 
         if (options.commandValidation) {
           const commandValidatorSource = path.join(sourceDir!, "scripts/command-validator");
-          if (!fs.existsSync(commandValidatorSource)) {
-            throw new Error(
-              `Command validation source files not found at ${commandValidatorSource}. Please ensure the configuration files are available.`
-            );
-          }
+          validateSourcePath(commandValidatorSource, "Command validation source files");
           await fs.copy(
             commandValidatorSource,
             path.join(scriptsDir, "command-validator"),
@@ -244,11 +255,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
 
         if (options.postEditTypeScript) {
           const hookPostFileSource = path.join(sourceDir!, "scripts/hook-post-file.ts");
-          if (!fs.existsSync(hookPostFileSource)) {
-            throw new Error(
-              `Post-edit TypeScript hook file not found at ${hookPostFileSource}. Please ensure the configuration files are available.`
-            );
-          }
+          validateSourcePath(hookPostFileSource, "Post-edit TypeScript hook file");
           await fs.copy(
             hookPostFileSource,
             path.join(scriptsDir, "hook-post-file.ts"),
@@ -258,11 +265,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
 
         if (options.customStatusline) {
           const statuslineSource = path.join(sourceDir!, "scripts/statusline");
-          if (!fs.existsSync(statuslineSource)) {
-            throw new Error(
-              `Custom statusline source files not found at ${statuslineSource}. Please ensure the configuration files are available.`
-            );
-          }
+          validateSourcePath(statuslineSource, "Custom statusline source files");
           await fs.copy(
             statuslineSource,
             path.join(scriptsDir, "statusline"),
@@ -282,11 +285,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
         );
       } else {
         const commandsSource = path.join(sourceDir!, "commands");
-        if (!fs.existsSync(commandsSource)) {
-          throw new Error(
-            `AIBlueprint commands source files not found at ${commandsSource}. Please ensure the configuration files are available.`
-          );
-        }
+        validateSourcePath(commandsSource, "AIBlueprint commands source files");
         await fs.copy(
           commandsSource,
           path.join(claudeDir, "commands"),
@@ -325,11 +324,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
         );
       } else {
         const agentsSource = path.join(sourceDir!, "agents");
-        if (!fs.existsSync(agentsSource)) {
-          throw new Error(
-            `AIBlueprint agents source files not found at ${agentsSource}. Please ensure the configuration files are available.`
-          );
-        }
+        validateSourcePath(agentsSource, "AIBlueprint agents source files");
         await fs.copy(
           agentsSource,
           path.join(claudeDir, "agents"),
@@ -387,11 +382,7 @@ export async function setupCommand(params: SetupCommandParams = {}) {
         );
       } else {
         const songSource = path.join(sourceDir!, "song");
-        if (!fs.existsSync(songSource)) {
-          throw new Error(
-            `Notification sounds source files not found at ${songSource}. Please ensure the configuration files are available.`
-          );
-        }
+        validateSourcePath(songSource, "Notification sounds source files");
         await fs.copy(
           songSource,
           path.join(claudeDir, "song"),
