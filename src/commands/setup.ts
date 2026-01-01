@@ -19,7 +19,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const GITHUB_RAW_BASE =
-  "https://raw.githubusercontent.com/Melvynx/aiblueprint-cli/main/claude-code-config";
+  "https://raw.githubusercontent.com/ValCapri/aiblueprint/main/claude-code-config";
 
 export interface SetupCommandParams {
   claudeCodeFolder?: string;
