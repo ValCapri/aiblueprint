@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import os from "os";
 import path from "path";
 
-const PREMIUM_REPO = "Melvynx/aiblueprint-cli-premium";
+const PREMIUM_REPO = "ValCapri/aiblueprint-premium";
 const PREMIUM_BRANCH = "main";
 
 interface InstallProConfigsOptions {

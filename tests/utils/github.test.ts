@@ -31,7 +31,7 @@ describe("GitHub Utils", () => {
 
       expect(result).toBe(mockContent);
       expect(mockFetch).toHaveBeenCalledWith(
-        "https://raw.githubusercontent.com/Melvynx/aiblueprint-cli/main/claude-code-config/commands/test.md"
+        "https://raw.githubusercontent.com/ValCapri/aiblueprint/main/claude-code-config/commands/test.md"
       );
     });
 
@@ -71,7 +71,7 @@ describe("GitHub Utils", () => {
 
       expect(result).toEqual(["commit.md", "epct.md"]);
       expect(mockFetch).toHaveBeenCalledWith(
-        "https://api.github.com/repos/Melvynx/aiblueprint-cli/contents/claude-code-config/commands"
+        "https://api.github.com/repos/ValCapri/aiblueprint/contents/claude-code-config/commands"
       );
     });
 
@@ -104,7 +104,7 @@ describe("GitHub Utils", () => {
 
       expect(result).toBe(true);
       expect(mockFetch).toHaveBeenCalledWith(
-        "https://raw.githubusercontent.com/Melvynx/aiblueprint-cli/main/claude-code-config/commands/commit.md"
+        "https://raw.githubusercontent.com/ValCapri/aiblueprint/main/claude-code-config/commands/commit.md"
       );
     });
 

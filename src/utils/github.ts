@@ -1,7 +1,7 @@
 import fs from 'fs-extra';
 import path from 'path';
 
-const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/Melvynx/aiblueprint-cli/main/claude-code-config';
+const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/ValCapri/aiblueprint/main/claude-code-config';
 
 export async function downloadFromGitHub(relativePath: string): Promise<string | null> {
   try {
@@ -18,7 +18,7 @@ export async function downloadFromGitHub(relativePath: string): Promise<string |
 
 export async function listFilesFromGitHub(dirPath: string): Promise<string[]> {
   try {
-    const apiUrl = `https://api.github.com/repos/Melvynx/aiblueprint-cli/contents/claude-code-config/${dirPath}`;
+    const apiUrl = `https://api.github.com/repos/ValCapri/aiblueprint/contents/claude-code-config/${dirPath}`;
     const response = await fetch(apiUrl);
     if (!response.ok) {
       return [];

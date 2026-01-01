@@ -16,7 +16,7 @@ export class SimpleSpinner {
 }
 
 const GITHUB_RAW_BASE =
-  "https://raw.githubusercontent.com/Melvynx/aiblueprint-cli/main/claude-code-config";
+  "https://raw.githubusercontent.com/ValCapri/aiblueprint/main/claude-code-config";
 
 export async function downloadFromGitHub(
   relativePath: string,
@@ -42,7 +42,7 @@ export async function downloadDirectoryFromGitHub(
   targetDir: string,
 ): Promise<boolean> {
   try {
-    const apiUrl = `https://api.github.com/repos/Melvynx/aiblueprint-cli/contents/claude-code-config/${dirPath}`;
+    const apiUrl = `https://api.github.com/repos/ValCapri/aiblueprint/contents/claude-code-config/${dirPath}`;
     const response = await fetch(apiUrl);
     if (!response.ok) {
       return false;
